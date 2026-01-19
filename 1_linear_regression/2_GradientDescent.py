@@ -1,9 +1,10 @@
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 df = pd.read_csv('predict_pricehouse.csv')
-features = ['sqft_living',
+features = [
+    'sqft_living',
     'bedrooms',
     'bathrooms',
     'floors',
@@ -15,33 +16,31 @@ features = ['sqft_living',
 ]
 X = df[features].values.astype(float)
 y = df['price'].values.reshape(-1,1).astype(float)
-
-N =X.shape[0]
+N = X.shape[0]
 idx = np.random.permutation(N)
 split = int(0.8*N)
 train , test = idx[:split] , idx[split:]
+
 X_train_raw , y_train = X[train] , y[train]
 X_test_raw , y_test = X[test] , y[test]
 
-X_mean = X_train_raw.mean(axis=0, keepdims=True)   # shape (1, d)
-X_std  = X_train_raw.std(axis=0, keepdims=True)    # shape (1, d)
-
-X_train = (X_train_raw - X_mean) / X_std
-X_test  = (X_test_raw  - X_mean) / X_std
-
+X_mean = X_train_raw.mean(axis = 0 , keepdims =True)#keepdims=True: giữ nguyên số chiều → kết quả có shape (1, n_features) thay vì (n_features,)
+X_std = X_train_raw.std(axis = 0 , keepdims = True)#keepdims=True: giữ nguyên số chiều → kết quả có shape (1, n_features) thay vì (n_features,)
+X_train = (X_train_raw-X_mean) / X_std
+X_test = (X_test_raw - X_mean) /X_std
 
 one = np.ones((X_train.shape[0],1))
 Xbar = np.concatenate((one , X_train),axis = 1)
 
 w = np.random.randn(Xbar.shape[1],1) * 0.01
-learning_rate = 1e-3
-epochs = 50000
+lrn_rate = 1e-3
+epochs = 100000
 m = X_train.shape[0]
-for _ in range(epochs):
+for _ in range(epochs) :
     y_pred = Xbar @ w
     loss = y_pred - y_train
-    gradient = (1/m) * (Xbar.T @ loss)
-    w = w - learning_rate * gradient
+    gradient =(1/m) *(Xbar.T @ loss)
+    w = w - lrn_rate*gradient
 
 y_train_final = Xbar @ w
 mse = np.mean((y_train_final - y_train)**2)
@@ -58,7 +57,7 @@ print("MAE train =", mae)
 print("MSE test  =", mse_test)
 print("MAE test  =", mae_test)
 
-n = 500
+n =500
 y_true_plot = y_test[:n]
 y_pred_plot = y_test_final[:n]
 
