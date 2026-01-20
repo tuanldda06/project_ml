@@ -47,4 +47,5 @@ for i in range(len(X)) :
 print(f'SSE = {SSE}')
 plt.scatter(X[:,0] , X[:,1] , c = label , s =1)
 plt.scatter(center[:,0],center[:,1] , c = 'red' , marker = 'X' , s = 200)
+#[:,0] nghĩa là lấy tất cả các cột của hàng 0 , [:,1] nghĩa là lấy tất cả các cột của hàng 1
 plt.show()

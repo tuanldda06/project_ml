@@ -27,11 +27,11 @@ def kmean_assign(X,center) :
 def kmeans_update(X,label ,K) :
     center = np.zeros((K,X.shape[1]))
     for k in range(K) :
-        Xk =X[label ==k,:]#Lấy tất cả điểm nằm trong cụm k → mỗi điểm gồm đầy đủ tọa độ x và y
+        Xk =X[label ==k,:]#Lấy tất cả điểm nằm trong cụm k → mỗi điểm gồm đầy đủ tọa độ x và y , còn [label ==k,:] là lấy tất cả các hàng mà label == k
         if Xk.shape[0] > 0 :
             center[k,:] = np.min(Xk,axis = 0)
         else :
-            center[k,:] = X[np.random.choice(0,X.shape[0])]
+            center[k,:] = X[np.random.randint(0,X.shape[0])]#trả về một số nguyên trong [0, n)
     return center 
 
 def has_converge(center , new_center , tol = 1e-6) :
@@ -57,4 +57,5 @@ for i in range(len(X)) :
 print(f'SSE = {SSE}')
 plt.scatter(X[:,0] , X[:,1] , c = label , s =1)
 plt.scatter(center[:,0],center[:,1] , c = 'red' , marker = 'X' , s = 200)
+#[:,0] nghĩa là lấy tất cả các cột của hàng 0 , [:,1] nghĩa là lấy tất cả các cột của hàng 1
 plt.show()

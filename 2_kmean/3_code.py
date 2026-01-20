@@ -41,9 +41,8 @@ def kmeans_main(X,K) :
         idx = np.random.permutation(X.shape[0])# xào trộn để online ổn định hơn
         for i in idx :
             D = cdist(X[i].reshape(1,-1),center)#tính khoảng cách từ điểm i tới mọi tâm.
-            #reshape là để biến “một điểm” thành mảng 2D (1, d) đúng format mà cdist yêu cầu.
             k = np.argmin(D,axis = 1)[0]#Lấy chỉ số cụm có khoảng cách nhỏ nhất → cụm gần nhất với X[i].
-
+            #do mặc định là lấy ra một hàng từ X nên mặc định nó sẽ có dạng (d,) thôi nên dùng reshape(1,-1) để biến nó thành mảng 2 chiều thì mới dùng cdist và tính được khoảng cách được
             center , count = kmean_update_online(center , count , X[i] , k )
         if has_converge(old_center , center , tol = 1e-6) :
             break
@@ -61,5 +60,6 @@ print('SSE=' , SSE)
 
 plt.scatter(X[:,0] , X[:,1] , c = label , s =1)
 plt.scatter(center[:,0] , center[:,1] , c = 'red' , marker = 'X' , s= 200)
+#[:,0] nghĩa là lấy tất cả các cột của hàng 0 , [:,1] nghĩa là lấy tất cả các cột của hàng 1
 plt.show()
 
