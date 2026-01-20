@@ -66,7 +66,7 @@ plt.scatter(y_train[:n],y_train_final[:n],color = 'red',label = 'Train')
 mn = min(y_true_plot.min(),y_pred_plot.min())
 mx = max(y_true_plot.max(),y_pred_plot.max())
 
-x_line = np.array([[mn],[mx]])
+x_line = np.array([[mn],[mx]])# → 2D, shape (2, 1) ✅ (column vector)
 y_line = x_line
 plt.plot(x_line , y_line , label = 'Fit for train')
 plt.xlabel('Gia tri dung')

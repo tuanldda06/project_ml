@@ -24,7 +24,7 @@ def kmean_asssign(X,center) :
 def kmean_update_online(center , count , x , k ) :#Mỗi điểm x sẽ được gán vào cụm gần nhất k.
     count[k] = count[k] + 1#Vì cụm k vừa nhận thêm 1 điểm mới, nên tăng bộ đếm: counts[k] += 1.
     eta = 1.0/count[k]
-    center[k,:] = center[k,:] + eta * ( x - center[k,:])##center[k,:] là tâm của cụm k (lấy toàn bộ tọa độ), vì mỗi hàng trong center tương ứng một cụm.
+    center[k,:] = center[k,:] + eta * ( x - center[k,:])#center[k,:] là tâm của cụm k (lấy toàn bộ tọa độ), vì mỗi hàng trong center tương ứng một cụm.
     return center , count
 
 
