@@ -26,7 +26,7 @@ Xbar = np.concatenate((one , X_train) , axis = 1)
 
 w = np.zeros((Xbar.shape[1],1)) # phải dùng Xbar do Xbar đã thêm cái w0 , còn cái X_train thì nó chưa có w0 nên không dùng để train được , thuộc tính thì là cột
 lrn_rate = 0.001
-epochs = 10000
+epochs = 100
 losses = []
 def sigmoid(z):
     return 1 /( 1 + np.exp(-z))#tính giá trị lũy thừa của số e
